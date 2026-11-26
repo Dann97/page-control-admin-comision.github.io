@@ -80,6 +80,123 @@
       transition: background 0.25s ease, color 0.25s ease;
     }
 
+    body.welcome-open { overflow: hidden; }
+
+    .welcome-cover {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      overflow: auto;
+      padding: 32px 20px;
+      background:
+        radial-gradient(circle at 12% 12%, rgba(91, 126, 201, 0.32), transparent 30%),
+        radial-gradient(circle at 88% 82%, rgba(201, 151, 54, 0.18), transparent 28%),
+        linear-gradient(135deg, #172b55 0%, #243b6b 52%, #111d3a 100%);
+      color: #fff;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+    }
+
+    .welcome-cover.is-closing {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .welcome-card {
+      position: relative;
+      width: min(940px, 100%);
+      padding: clamp(30px, 6vw, 64px);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 28px;
+      background: rgba(15, 29, 61, 0.56);
+      box-shadow: 0 28px 80px rgba(5, 14, 35, 0.38);
+      backdrop-filter: blur(18px);
+      text-align: center;
+    }
+
+    .welcome-emblem {
+      width: 92px;
+      height: 92px;
+      margin: 0 auto 22px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      object-fit: cover;
+      box-shadow: 0 8px 26px rgba(0, 0, 0, 0.24);
+    }
+
+    .welcome-kicker {
+      margin-bottom: 10px;
+      color: #f5d994;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .welcome-title {
+      max-width: 760px;
+      margin: 0 auto;
+      font-size: clamp(2rem, 5vw, 4.1rem);
+      font-weight: 850;
+      letter-spacing: -0.045em;
+      line-height: 1.05;
+    }
+
+    .welcome-description {
+      max-width: 650px;
+      margin: 18px auto 0;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: clamp(0.98rem, 2vw, 1.12rem);
+    }
+
+    .welcome-highlights {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 34px 0;
+    }
+
+    .welcome-highlight {
+      padding: 16px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .welcome-highlight strong { display: block; font-size: 0.9rem; }
+    .welcome-highlight span { display: block; margin-top: 4px; color: rgba(255, 255, 255, 0.62); font-size: 0.76rem; }
+
+    .welcome-enter {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      border: 0;
+      border-radius: 10px;
+      padding: 13px 22px;
+      background: #f5d994;
+      color: #172b55;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .welcome-enter:hover { background: #ffe6a9; transform: translateY(-2px); box-shadow: 0 12px 26px rgba(0, 0, 0, 0.26); }
+    .welcome-enter:focus-visible { outline-color: #f5d994; }
+
+    .welcome-note { margin: 18px 0 0; color: rgba(255, 255, 255, 0.55); font-size: 0.76rem; }
+
+    html[data-bs-theme="dark"] .welcome-cover {
+      background:
+        radial-gradient(circle at 12% 12%, rgba(98, 136, 216, 0.3), transparent 30%),
+        radial-gradient(circle at 88% 82%, rgba(201, 151, 54, 0.15), transparent 28%),
+        linear-gradient(135deg, #0b142b 0%, #172b55 52%, #080f20 100%);
+    }
+
     html[data-bs-theme="dark"] body {
       background: radial-gradient(circle at 8% 0%, rgba(59, 91, 150, 0.22), transparent 28%), linear-gradient(180deg, #111c31 0%, var(--bg) 42%, #0b1120 100%);
     }
@@ -111,7 +228,7 @@
       gap: 12px;
     }
 
-    .brand h1 { font-size: 1.12rem; font-weight: 800; letter-spacing: -0.02em; color: var(--primary); }
+    .brand h1 { font-size: 1.50rem; font-weight: 800; letter-spacing: -0.02em; color: var(--primary); }
     .brand p { margin-top: 2px; font-size: 0.78rem; color: var(--muted); }
 
     .brand-lockup { display: flex; align-items: center; gap: 12px; }
@@ -249,7 +366,7 @@
 
     .charts-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
       gap: 22px;
       margin-bottom: 28px;
     }
@@ -384,6 +501,8 @@
     .hidden { display: none !important; }
 
     @media (max-width: 640px) {
+      .welcome-card { border-radius: 20px; }
+      .welcome-highlights { grid-template-columns: 1fr; margin: 26px 0; }
       .topbar-inner { padding: 14px 16px; }
       .brand-lockup { align-items: flex-start; }
       nav.nav-tabs { width: 100%; }
@@ -396,11 +515,43 @@
   </style>
 </head>
 <body>
+  <section class="welcome-cover" id="welcome-cover" aria-labelledby="welcome-title">
+    <div class="welcome-card">
+      <img class="welcome-emblem" src="./virgen-asuncion.jpg" alt="Virgen de la Asunción" />
+      <p class="welcome-kicker">Bienvenidos</p>
+      <h2 class="welcome-title" id="welcome-title">Comité Pro 15 de Agosto 2026</h2>
+      <p class="welcome-description">
+        Un espacio para consultar de forma clara y ordenada la administración de recursos,
+        cooperaciones, cortes operativos y gastos de la festividad en honor a la virgen de la asunción.
+      </p>
+
+      <div class="welcome-highlights" aria-label="Funciones principales">
+        <div class="welcome-highlight">
+          <strong>Control financiero</strong>
+          <span>Ingresos, gastos y saldo neto</span>
+        </div>
+        <div class="welcome-highlight">
+          <strong>Información</strong>
+          <span>Resumen visual de cada rubro</span>
+        </div>
+        <div class="welcome-highlight">
+          <strong>Consulta detallada</strong>
+          <span>Filtros y exportación de movimientos</span>
+        </div>
+      </div>
+
+      <button class="welcome-enter" id="welcome-enter" type="button">
+        Ingresar al panel <span aria-hidden="true">→</span>
+      </button>
+      <p class="welcome-note">Administración y transparencia para nuestra festividad</p>
+    </div>
+  </section>
+
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">
         <div class="brand-lockup">
-            <img src="./virgen-asuncion.jpg" width="80px" height="auto" alt="">
+            <img src="./virgen-asuncion.jpg" width="80px" height="70px" style="border-radius:50%;" alt="Virgen de la Asunción">
           <div>
             <h1>Comité Pro 15 de Agosto — Recursos 2026</h1>
             <p>Control de administración, cortes operativos, cooperaciones y gastos de festividad</p>
@@ -412,7 +563,7 @@
         <label class="theme-switch" for="theme-toggle">
           <span aria-hidden="true">☾</span>
           <span>Modo oscuro</span>
-          <input type="checkbox" id="theme-toggle" role="switch" aria-label="Activar modo oscuro" />
+          <input type="checkbox" id="theme-toggle" role="switch" aria-checked="false" aria-label="Activar modo oscuro" />
           <span class="theme-switch-track" aria-hidden="true"><span class="theme-switch-thumb"></span></span>
         </label>
       </nav>
@@ -1320,8 +1471,26 @@ Música, Castillo, Audio y Jaripeo	Sin fecha	CARRITO DE BOMBAS	-	10000.0
       });
     }
 
+    function initWelcomeCover() {
+      const cover = document.getElementById("welcome-cover");
+      const enterButton = document.getElementById("welcome-enter");
+
+      document.body.classList.add("welcome-open");
+      document.querySelector("header.topbar")?.setAttribute("inert", "");
+      document.querySelector("main.container")?.setAttribute("inert", "");
+
+      enterButton.addEventListener("click", () => {
+        document.body.classList.remove("welcome-open");
+        document.querySelector("header.topbar")?.removeAttribute("inert");
+        document.querySelector("main.container")?.removeAttribute("inert");
+        cover.classList.add("is-closing");
+        window.setTimeout(() => cover.remove(), 350);
+      });
+    }
+
     window.addEventListener("hashchange", handleHashRoute);
 
+    initWelcomeCover();
     recalculateTotals();
     renderDashboardKpis();
     renderDashboardSummaryTable();
