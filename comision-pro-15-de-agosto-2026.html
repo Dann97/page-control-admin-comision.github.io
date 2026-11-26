@@ -155,7 +155,7 @@
           <div class="chart-box"><canvas id="chartGastosCategoria"></canvas></div>
         </div>
 
-        <div class="panel" style="grid-column: 1 / -1;">
+        <div class="panel full-width-panel">
           <div class="panel-header">
             <div>
               <div class="panel-title">Evolución Mensual de Cortes Operativos (Enero – Mayo 2026)</div>
@@ -163,7 +163,7 @@
             </div>
             <a href="#cortes" class="kpi-link">Abrir detalle de cortes →</a>
           </div>
-          <div class="chart-box" style="height: 270px;"><canvas id="chartMensualCortes"></canvas></div>
+          <div class="chart-box monthly"><canvas id="chartMensualCortes"></canvas></div>
         </div>
       </div>
 
@@ -197,7 +197,7 @@
             <div class="panel-title" id="detalle-heading">Detalle de Ingresos y Gastos</div>
             <div class="panel-subtitle" id="detalle-subheading">Consulta, filtra y exporta cada movimiento registrado</div>
           </div>
-          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <div class="inline-actions">
             <button class="nav-btn" id="btn-export-csv" type="button">Exportar CSV filtrado</button>
             <a href="#dashboard" class="nav-btn" data-view="dashboard">← Volver al Dashboard</a>
           </div>
@@ -231,7 +231,7 @@
           <div class="mini-stat"><span>Saldo del filtro</span><strong id="stat-balance">$0.00</strong></div>
         </div>
 
-        <div class="summary-table-wrap" style="margin-bottom:20px;">
+        <div class="summary-table-wrap spaced">
           <div class="panel-header">
             <div>
               <div class="panel-title">Distribución por Rubro y Categoría</div>
@@ -253,7 +253,7 @@
           </table>
         </div>
 
-        <div class="summary-table-wrap" style="margin-bottom:0;">
+        <div class="summary-table-wrap compact">
           <table class="data-table">
             <thead>
               <tr>
@@ -273,7 +273,7 @@
 
         <div class="pagination-bar">
           <span id="page-info">Página 1 de 1</span>
-          <div style="display:flex; gap:8px;">
+          <div class="pagination-actions">
             <button class="nav-btn" id="btn-prev" type="button">← Anterior</button>
             <button class="nav-btn" id="btn-next" type="button">Siguiente →</button>
           </div>
@@ -778,7 +778,7 @@ Música, Castillo, Audio y Jaripeo	Sin fecha	CARRITO DE BOMBAS	-	10000.0
           <td>${r.cantidad}</td>
           <td class="num">${fmtMXN(r.monto)}</td>
         </tr>
-      `).join("") : `<tr><td colspan="8" style="text-align:center; padding:24px; color:var(--muted);">No se encontraron registros con los filtros actuales.</td></tr>`;
+      `).join("") : `<tr><td colspan="8" class="empty-state">No se encontraron registros con los filtros actuales.</td></tr>`;
 
       document.getElementById("page-info").textContent = `Página ${state.page} de ${totalPages} (${totalItems} registros)`;
       document.getElementById("btn-prev").disabled = state.page <= 1;
@@ -820,7 +820,7 @@ Música, Castillo, Audio y Jaripeo	Sin fecha	CARRITO DE BOMBAS	-	10000.0
           <td class="num">${fmtMXN(group.expenses)}</td>
           <td class="num">${fmtMXN(group.gains - group.expenses)}</td>
         </tr>
-      `).join("") : `<tr><td colspan="6" style="text-align:center; padding:24px; color:var(--muted);">No se encontraron categorías con los filtros actuales.</td></tr>`;
+      `).join("") : `<tr><td colspan="6" class="empty-state">No se encontraron categorías con los filtros actuales.</td></tr>`;
     }
 
     function changePage(delta) {

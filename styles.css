@@ -391,6 +391,14 @@ html[data-bs-theme="dark"] .kpi-link { color: #a9c2ff; }
   margin-bottom: 28px;
 }
 
+.full-width-panel { grid-column: 1 / -1; }
+.chart-box.monthly { height: 270px; }
+.inline-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.summary-table-wrap.spaced { margin-bottom: 20px; }
+.summary-table-wrap.compact { margin-bottom: 0; }
+.pagination-actions { display: flex; gap: 8px; }
+.empty-state { text-align: center; padding: 24px; color: var(--muted); }
+
 .panel {
   background: var(--surface);
   border: 1px solid rgba(229, 234, 242, 0.9);
